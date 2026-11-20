@@ -32,6 +32,8 @@
                     <td>{{ $trip->stops_count }}</td>
                     <td>
                         <a href="{{ route('stops.trip', $trip->id) }}" class="btn btn-success">Ver paragens</a>
+                        <a href="{{ route('trips.edit', $trip->id) }}" class="btn btn-outline-success">Editar</a>
+                        <a href="{{ route('trips.delete', $trip->id) }}" class="btn btn-outline-danger">Apagar</a>
                     </td>
                 </tr>
             @endforeach
