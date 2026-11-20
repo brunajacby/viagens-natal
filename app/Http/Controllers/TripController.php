@@ -16,4 +16,10 @@ class TripController extends Controller
         // envia as viagens para a view
         return view('trips.alltrips', compact('trips'));
     }
+
+    // mostra o formulário para adicionar viagem
+    public function addTrip() {
+
+        return view('trips.addtrip');
+    }
 }
