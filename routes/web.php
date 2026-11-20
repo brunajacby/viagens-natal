@@ -16,3 +16,6 @@ Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard
 
 // rota do formulário para adicionar viagem
 Route::get('/trips/add', [TripController::class, 'addTrip'])->name('trips.add');
+
+// rota para gravar a viagem
+Route::post('/trips/store', [TripController::class, 'storeTrip'])->name('trips.store');

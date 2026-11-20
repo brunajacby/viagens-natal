@@ -1,8 +1,16 @@
-{{-- usa o layout master --}}
 @extends('layouts.fo')
 
 @section('content')
     <h1 class="my-4">Viagens de Natal</h1>
+
+    {{-- mensagem de sucesso --}}
+    @if (session('message'))
+        <div class="alert alert-success" role="alert">
+            {{ session('message') }}
+        </div>
+    @endif
+
+    <a href="{{ route('trips.add') }}" class="btn btn-success mb-3">Adicionar viagem</a>
 
     {{-- tabela das viagens --}}
     <table class="table">
@@ -19,7 +27,8 @@
             @foreach ($trips as $trip)
                 <tr>
                     <td>{{ $trip->destination }}</td>
-                    <td>{{ $trip->photo }}</td>
+                    <td><img class="trip-photo" src="{{ $trip->photo ? asset('storage/' . $trip->photo) : asset('images/nophoto.jpg') }}" alt="">
+                    </td>
                     <td>{{ $trip->stops_count }}</td>
                     <td>
                         <a href="{{ route('stops.trip', $trip->id) }}" class="btn btn-success">Ver paragens</a>
