@@ -18,9 +18,10 @@ return new class extends Migration
             // caminho da foto (pode ficar vazio)
             $table->string('photo')->nullable();
             $table->date('visit_date');
-            // liga a paragem à viagem
-            $table->foreignId('trip_id')->constrained('trips');
             $table->timestamps();
+            // liga a paragem à viagem
+            $table->unsignedBigInteger('trip_id');
+            $table->foreign('trip_id')->references('id')->on('trips');
         });
     }
 

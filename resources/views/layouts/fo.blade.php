@@ -14,28 +14,26 @@
  
 <body class="bg-light">
     {{-- navbar --}}
-    <nav class="navbar navbar-expand-lg bg-success-subtle">
-        <div class="container-fluid">
-            <a class="navbar-brand fw-bold" href="{{ url('/') }}">Viagens de Natal</a>
+    <nav class="navbar navbar-expand-lg bg-success-subtle shadow-sm py-3">
+        <div class="container">
+            <a class="navbar-brand fw-bold text-success fs-4" href="{{ url('/') }}">🎄 Viagens de Natal</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                 data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
                 aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                    <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="{{ url('/') }}">Viagens</a>
-                    </li>
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
+                    @auth
+                        <li class="nav-item">
+                            <a class="nav-link fw-semibold" href="{{ route('dashboard') }}">Dashboard</a>
+                        </li>
+                    @endauth
                 </ul>
                 {{-- login / logout --}}
                   @if (Route::has('login'))
                 <nav class="d-flex align-items-center gap-2">
                     @auth
-                        <a href="{{ url('/dashboard') }}" class="btn btn-outline-success">
-                            Dashboard
-                        </a>
-
                             <form action="{{route('logout')}}" method="post">
                                 @csrf
                                 <button type="submit" class="btn btn-success">Logout</button>

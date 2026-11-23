@@ -12,10 +12,13 @@ class TripController extends Controller
     // mostra todas as viagens
     public function allTrips() {
 
-        // vai buscar as viagens e conta as paragens de cada uma
-        $trips = Trip::withCount('stops')->get();
+        $trips = Trip::select('id', 'destination', 'photo')->get();
 
-        // envia as viagens para a view
+        // conta as paragens de cada viagem
+        foreach ($trips as $trip) {
+            $trip->stops_count = Stop::where('trip_id', $trip->id)->count();
+        }
+
         return view('trips.alltrips', compact('trips'));
     }
 
@@ -56,7 +59,7 @@ class TripController extends Controller
         return view('trips.edittrip', compact('tripInfo'));
     }
 
-        // grava as alterações da viagem
+    // grava as alterações da viagem
     public function updateTrip(Request $request) {
 
         $request->validate([
@@ -64,7 +67,7 @@ class TripController extends Controller
             'photo' => 'image'
         ]);
 
-        $photo = Trip::where('id', $request->id)->value('photo');
+        $photo = null;
 
         if($request->hasFile('photo')){
             //armazenar no storage e guarda o caminho numa var
@@ -73,13 +76,13 @@ class TripController extends Controller
 
         Trip::where('id', $request->id)->update([
             'destination' => $request->destination,
-            'photo' => $photo
+            'photo' => isset ($photo) ? $photo : null,
         ]);
 
         return redirect()->route('trips.all')->with('message', 'Viagem actualizada com sucesso!');
     }
 
-        // apaga a viagem e as paragens dela
+    // apaga a viagem e as paragens dela
     public function deleteTrip($id) {
 
         Stop::where('trip_id', $id)->delete();

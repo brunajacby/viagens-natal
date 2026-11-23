@@ -19,7 +19,7 @@ class User extends Authenticatable
 
     // tipos de utilizador
     const TYPE_ADMIN = 1;
-    const TYPE_USER = 8;
+    const TYPE_GENERIC_USER = 8;
 
     /**
      * Get the attributes that should be cast.

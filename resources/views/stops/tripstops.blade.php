@@ -10,7 +10,12 @@
         </div>
     @endif
 
-    <a href="{{ route('stops.add', $trip->id) }}" class="btn btn-success mb-3">Adicionar paragem</a>
+    {{-- só o admin adiciona --}}
+    @auth
+        @if (Auth::user()->user_type == 1)
+            <a href="{{ route('stops.add', $trip->id) }}" class="btn btn-success mb-3">Adicionar paragem</a>
+        @endif
+    @endauth
 
     {{-- tabela das paragens --}}
     <table class="table">
@@ -30,8 +35,14 @@
                     </td>
                     <td>{{ $stop->visit_date }}</td>
                     <td>
-                        <a href="{{ route('stops.edit', $stop->id) }}" class="btn btn-outline-success">Editar</a>
-                        <a href="{{ route('stops.delete', $stop->id) }}" class="btn btn-outline-danger">Apagar</a>
+                        {{-- editar com login, apagar só admin --}}
+                        @auth
+                            <a href="{{ route('stops.edit', $stop->id) }}" class="btn btn-outline-success">Editar</a>
+
+                            @if (Auth::user()->user_type == 1)
+                                <a href="{{ route('stops.delete', $stop->id) }}" class="btn btn-outline-danger" onclick="return confirm('Tem a certeza que quer apagar esta paragem?')">Apagar</a>
+                            @endif
+                        @endauth
                     </td>
                 </tr>
             @endforeach

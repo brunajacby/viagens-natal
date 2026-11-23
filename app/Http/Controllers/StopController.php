@@ -72,7 +72,7 @@ class StopController extends Controller
             'photo' => 'image'
         ]);
 
-        $photo = Stop::where('id', $request->id)->value('photo');
+        $photo = null;
 
         if($request->hasFile('photo')){
             //armazenar no storage e guarda o caminho numa var
@@ -82,7 +82,7 @@ class StopController extends Controller
         Stop::where('id', $request->id)->update([
             'city' => $request->city,
             'visit_date' => $request->visit_date,
-            'photo' => $photo
+            'photo' => isset ($photo) ? $photo : null,
         ]);
 
         return redirect()->route('stops.trip', $request->trip_id)->with('message', 'Paragem actualizada com sucesso!');
