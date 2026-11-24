@@ -10,11 +10,14 @@ class DashboardController extends Controller
     // mostra o dashboard
     public function index()
     {
-        // dia de Natal deste ano
-        $natal = Carbon::create(now()->year, 12, 25);
+        // hoje até meia noite
+        $hoje = Carbon::today();
+
+        // dia de Natal deste ano até meia noite
+        $natal = Carbon::createMidnightDate(now()->year, 12, 25);
 
         // dias que faltam até ao Natal
-        $diasNatal = (int) now()->startOfDay()->diffInDays($natal);
+        $diasNatal = (int) $hoje->diffInDays($natal);
 
         return view('dashboard.home', compact('diasNatal'));
     }
